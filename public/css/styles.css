@@ -260,3 +260,74 @@ footer p {
     background: var(--btn-hover);
     transform: translateY(-50%) scale(1.05);
 }
+
+.instructions {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    padding: 1.5rem;
+    background: var(--container-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.instructions h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.instructions-list {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+}
+
+.instructions-list li {
+    margin: 1rem 0;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.5;
+}
+
+.instructions-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.instructions-list li a {
+    color: var(--primary-color);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.instructions-list li a:hover {
+    opacity: 0.8;
+    border-bottom-style: solid;
+}
+
+.file-types {
+    display: inline-flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.file-type {
+    background: var(--file-item-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+}
+
+.note {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    font-style: italic;
+}

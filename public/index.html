@@ -14,6 +14,23 @@
 
     <main>
         <div class="container">
+            <div class="instructions">
+                <h2>Как использовать приложение</h2>
+                <ul class="instructions-list">
+                    <li>Перетащите файлы резюме в зону загрузки или выберите их через кнопку.</li>
+                    <li>Нажмите кнопку «Обработать файлы» для начала обработки.</li>
+                    <li>Дождитесь сообщения об успешной обработке файлов.</li>
+                    <li>Перейдите в <a href="https://docs.google.com/spreadsheets/d/1dhLJUaeO-5jdZp7hJaQE5Yp1BwSoYThE2FSKQMUfKZE/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">Google Sheets</a> для просмотра обработанных данных.</li>
+                </ul>
+                <div class="file-types">
+                    Поддерживаемые форматы:
+                    <span class="file-type">.doc</span>
+                    <span class="file-type">.docx</span>
+                    <span class="file-type">.pdf</span>
+                </div>
+                <p class="note">Примечание: Время обработки зависит от размера и содержимого файлов. Максимальный размер файла — 10 МБ.</p>
+            </div>
+
             <div class="drop-zone" id="dropZone">
                 <p>Перетащите файлы сюда или</p>
                 <input type="file" id="fileInput" class="file-input" multiple accept=".doc,.docx,.pdf">
@@ -28,7 +45,7 @@
 
     <footer>
         <p>Made with ♥ by Automatica</p>
-        <p class="version">v1.3.0</p>
+        <p class="version">v1.4.0</p>
     </footer>
 
     <div class="notification" id="notification"></div>
