@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wardhowell CV Processor</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>WH CV Processor</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="drop-zone" id="dropZone">
+                <p>Перетащите файлы сюда или</p>
+                <input type="file" id="fileInput" class="file-input" multiple accept=".doc,.docx,.pdf">
+                <button class="btn" onclick="document.getElementById('fileInput').click()">Выберите файлы</button>
+            </div>
+            
+            <div class="files-list" id="filesList"></div>
+            
+            <button class="btn" id="processButton" disabled>Обработать файлы</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Made with ♥ by Automatica</p>
+        <p class="version">v1.2.0</p>
+    </footer>
+
+    <div class="notification" id="notification"></div>
+
+    <script src="/js/upload.js"></script>
+</body>
+</html>
