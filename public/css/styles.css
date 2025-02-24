@@ -5,29 +5,51 @@
     --error-color: #dc3545;
     --background-color: #f8f9fa;
     --text-color: #212529;
+    --bg-color: #f5f5f5;
+    --container-bg: #ffffff;
+    --border-color: #4CAF50;
+    --btn-bg: #4CAF50;
+    --btn-hover: #45a049;
+    --file-item-bg: #f8f9fa;
+    --header-bg: #ffffff;
+    --footer-bg: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --container-bg: #2d2d2d;
+    --text-color: #ffffff;
+    --border-color: #4CAF50;
+    --btn-bg: #4CAF50;
+    --btn-hover: #45a049;
+    --file-item-bg: #3d3d3d;
+    --header-bg: #2d2d2d;
+    --footer-bg: #2d2d2d;
+    --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.6;
+    background-color: var(--bg-color);
     color: var(--text-color);
-    background-color: var(--background-color);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 header {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 1rem 0;
-    text-align: center;
+    background-color: var(--header-bg);
+    padding: 1rem;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    position: relative;
 }
 
 header h1 {
@@ -46,21 +68,21 @@ main {
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
-    background: white;
+    margin: 2rem auto;
+    background: var(--container-bg);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px var(--shadow-color);
 }
 
 .drop-zone {
-    border: 2px dashed var(--primary-color);
+    border: 2px dashed var(--border-color);
     border-radius: 8px;
     padding: 2rem;
     text-align: center;
-    background-color: white;
-    transition: border-color 0.3s ease;
-    margin-bottom: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
 }
 
 .drop-zone.dragover {
@@ -92,11 +114,11 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem;
-    background-color: white;
-    border-radius: 4px;
+    padding: 0.8rem;
+    background-color: var(--file-item-bg);
+    border-radius: 6px;
     margin-bottom: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
 }
 
 .file-item .file-name {
@@ -197,11 +219,11 @@ main {
 }
 
 footer {
-    background-color: white;
-    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-    padding: 1rem 0;
-    text-align: center;
     margin-top: auto;
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--footer-bg);
+    box-shadow: 0 -2px 10px var(--shadow-color);
 }
 
 footer p {
@@ -212,4 +234,29 @@ footer p {
 .version {
     font-size: 0.875rem;
     opacity: 0.8;
+}
+
+.theme-switcher {
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    background: var(--btn-bg);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.theme-switcher:hover {
+    background: var(--btn-hover);
+    transform: translateY(-50%) scale(1.05);
 }
