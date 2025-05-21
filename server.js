@@ -173,7 +173,8 @@ app.get('/api/environment', (req, res) => {
     res.json({
         environment: config.environment,
         webhookUrl: WEBHOOK_URL,
-        maxFileSize: config.upload.maxFileSize
+        maxFileSize: config.upload.maxFileSize,
+        googleSheetsUrl: config.googleSheets.url
     });
 });
 

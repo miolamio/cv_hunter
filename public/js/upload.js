@@ -3,9 +3,29 @@ const fileInput = document.getElementById('fileInput');
 const filesList = document.getElementById('filesList');
 const processButton = document.getElementById('processButton');
 const notification = document.getElementById('notification');
+const googleSheetsLink = document.getElementById('googleSheetsLink');
 
-let files = new Map();
+const files = new Map();
 let currentSessionId = null;
+
+// Fetch environment settings including Google Sheets URL
+async function fetchEnvironmentSettings() {
+    try {
+        const response = await fetch('/api/environment');
+        if (!response.ok) throw new Error('Failed to fetch environment settings');
+        
+        const data = await response.json();
+        if (data.googleSheetsUrl) {
+            googleSheetsLink.href = data.googleSheetsUrl;
+            console.log('Google Sheets URL set:', data.googleSheetsUrl);
+        }
+    } catch (error) {
+        console.error('Error fetching environment settings:', error);
+    }
+}
+
+// Initialize environment settings
+fetchEnvironmentSettings();
 
 // WebSocket connection
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
