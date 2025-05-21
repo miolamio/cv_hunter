@@ -70,10 +70,10 @@ app.post('/upload', upload.array('files'), async (req, res) => {
             return res.status(400).json({ error: 'No files uploaded' });
         }
 
-        // Check if project ID is provided
-        const projectId = req.body.projectId;
-        if (!projectId) {
-            return res.status(400).json({ error: 'Project ID is required' });
+        // Check if project name is provided
+        const projectName = req.body.projectName;
+        if (!projectName) {
+            return res.status(400).json({ error: 'Project name is required' });
         }
 
         // Generate session ID for this upload
@@ -96,11 +96,11 @@ app.post('/upload', upload.array('files'), async (req, res) => {
             });
         });
 
-        // Add session ID and project ID to form data
+        // Add session ID and project name to form data
         form.append('sessionId', sessionId);
-        form.append('projectId', projectId);
+        form.append('projectName', projectName);
         
-        console.log('Processing files for project ID:', projectId);
+        console.log('Processing files for project:', projectName);
 
         console.log('Sending request to webhook:', WEBHOOK_URL);
         

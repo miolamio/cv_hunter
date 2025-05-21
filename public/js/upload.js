@@ -8,7 +8,7 @@ const projectSelect = document.getElementById('projectSelect');
 
 const files = new Map();
 let currentSessionId = null;
-const selectedProjectId = { value: null }; // Using an object to allow updates
+const selectedProject = { id: null, name: null }; // Store both ID and name
 
 // Fetch environment settings including Google Sheets URL
 async function fetchEnvironmentSettings() {
@@ -55,6 +55,8 @@ function populateProjectsDropdown(projects) {
         const option = document.createElement('option');
         option.value = project['No.'];
         option.textContent = `${project['No.']} - ${project['Project Name']}`;
+        // Store project name as a data attribute
+        option.dataset.projectName = project['Project Name'];
         projectSelect.appendChild(option);
     }
     
@@ -66,8 +68,10 @@ function populateProjectsDropdown(projects) {
 
 // Handle project selection
 projectSelect.addEventListener('change', (event) => {
-    selectedProjectId.value = event.target.value;
-    console.log('Selected project ID:', selectedProjectId.value);
+    const selectedOption = event.target.options[event.target.selectedIndex];
+    selectedProject.id = event.target.value;
+    selectedProject.name = selectedOption.dataset.projectName;
+    console.log('Selected project:', { id: selectedProject.id, name: selectedProject.name });
 });
 
 // Initialize projects
@@ -215,7 +219,7 @@ function showNotification(message, type = 'success') {
 }
 
 processButton.addEventListener('click', async () => {
-    if (!selectedProjectId.value) {
+    if (!selectedProject.name) {
         showNotification('Пожалуйста, выберите проект', 'error');
         return;
     }
@@ -225,8 +229,8 @@ processButton.addEventListener('click', async () => {
         formData.append('files', fileData.file);
     });
     
-    // Add the project ID to the form data
-    formData.append('projectId', selectedProjectId.value);
+    // Add the project name to the form data
+    formData.append('projectName', selectedProject.name);
 
     processButton.disabled = true;
     
