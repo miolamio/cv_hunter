@@ -1,5 +1,10 @@
 # Release Notes
 
+## v1.6.0 (2025-05-21)
+
+### Changes
+- Added RELEASE_NOTES.md for version tracking and changelog
+
 ## v1.5.0 (2025-05-21)
 
 ### Changes
