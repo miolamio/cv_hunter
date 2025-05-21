@@ -1,5 +1,10 @@
 # Release Notes
 
+## v1.7.0 (2025-05-21)
+
+### Changes
+- Updated documentation to reflect version changes
+
 ## v1.6.0 (2025-05-21)
 
 ### Changes
