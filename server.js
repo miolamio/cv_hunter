@@ -70,6 +70,12 @@ app.post('/upload', upload.array('files'), async (req, res) => {
             return res.status(400).json({ error: 'No files uploaded' });
         }
 
+        // Check if project ID is provided
+        const projectId = req.body.projectId;
+        if (!projectId) {
+            return res.status(400).json({ error: 'Project ID is required' });
+        }
+
         // Generate session ID for this upload
         const sessionId = Date.now().toString();
         
@@ -90,8 +96,11 @@ app.post('/upload', upload.array('files'), async (req, res) => {
             });
         });
 
-        // Add session ID to form data
+        // Add session ID and project ID to form data
         form.append('sessionId', sessionId);
+        form.append('projectId', projectId);
+        
+        console.log('Processing files for project ID:', projectId);
 
         console.log('Sending request to webhook:', WEBHOOK_URL);
         
@@ -107,7 +116,7 @@ app.post('/upload', upload.array('files'), async (req, res) => {
                 console.log('Webhook response headers:', webhookRes.headers);
                 
                 let data = '';
-                webhookRes.on('data', chunk => data += chunk);
+                webhookRes.on('data', chunk => { data = data + chunk; });
                 webhookRes.on('end', () => {
                     console.log('Webhook response data:', data);
                     if (webhookRes.statusCode >= 200 && webhookRes.statusCode < 300) {
@@ -176,6 +185,59 @@ app.get('/api/environment', (req, res) => {
         maxFileSize: config.upload.maxFileSize,
         googleSheetsUrl: config.googleSheets.url
     });
+});
+
+// Add endpoint to fetch projects list
+app.get('/api/projects', async (req, res) => {
+    try {
+        console.log('Fetching projects from webhook:', config.webhook.projects);
+        
+        const response = await new Promise((resolve, reject) => {
+            const options = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${Buffer.from('wardhowell:aiwins2025').toString('base64')}`
+                }
+            };
+
+            const webhookReq = https.request(config.webhook.projects, options, (webhookRes) => {
+                console.log('Projects webhook response status:', webhookRes.statusCode);
+                
+                let data = '';
+                webhookRes.on('data', chunk => { data = data + chunk; });
+                webhookRes.on('end', () => {
+                    if (webhookRes.statusCode >= 200 && webhookRes.statusCode < 300) {
+                        try {
+                            const projects = JSON.parse(data);
+                            resolve(projects);
+                        } catch (error) {
+                            console.error('Error parsing projects data:', error);
+                            reject(new Error('Error parsing projects data'));
+                        }
+                    } else {
+                        reject(new Error(`Projects webhook returned status ${webhookRes.statusCode}. Response: ${data}`));
+                    }
+                });
+            });
+
+            webhookReq.on('error', (error) => {
+                console.error('Projects webhook request error:', error);
+                reject(error);
+            });
+
+            webhookReq.end();
+        });
+
+        res.json(response);
+
+    } catch (error) {
+        console.error('Error fetching projects:', error);
+        res.status(500).json({ 
+            error: error.message,
+            environment: config.environment
+        });
+    }
 });
 
 // Start server

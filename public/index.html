@@ -31,6 +31,13 @@
                 <p class="note">Примечание: Время обработки зависит от размера и содержимого файлов. Максимальный размер файла — 10 МБ.</p>
             </div>
 
+            <div class="projects-section">
+                <label for="projectSelect">Выберите проект:</label>
+                <select id="projectSelect" class="project-select">
+                    <option value="" disabled selected>Загрузка проектов...</option>
+                </select>
+            </div>
+
             <div class="drop-zone" id="dropZone">
                 <p>Перетащите файлы сюда или</p>
                 <input type="file" id="fileInput" class="file-input" multiple accept=".doc,.docx,.pdf">
@@ -45,7 +52,7 @@
 
     <footer>
         <p>Made with ♥ by Automatica</p>
-        <p class="version">v1.10.0</p>
+        <p class="version">v1.11.0</p>
     </footer>
 
     <div class="notification" id="notification"></div>

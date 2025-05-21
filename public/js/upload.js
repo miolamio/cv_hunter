@@ -4,9 +4,11 @@ const filesList = document.getElementById('filesList');
 const processButton = document.getElementById('processButton');
 const notification = document.getElementById('notification');
 const googleSheetsLink = document.getElementById('googleSheetsLink');
+const projectSelect = document.getElementById('projectSelect');
 
 const files = new Map();
 let currentSessionId = null;
+const selectedProjectId = { value: null }; // Using an object to allow updates
 
 // Fetch environment settings including Google Sheets URL
 async function fetchEnvironmentSettings() {
@@ -26,6 +28,50 @@ async function fetchEnvironmentSettings() {
 
 // Initialize environment settings
 fetchEnvironmentSettings();
+
+// Fetch projects from API
+async function fetchProjects() {
+    try {
+        const response = await fetch('/api/projects');
+        if (!response.ok) throw new Error('Failed to fetch projects');
+        
+        const projects = await response.json();
+        populateProjectsDropdown(projects);
+    } catch (error) {
+        console.error('Error fetching projects:', error);
+        showNotification('Ошибка при загрузке проектов', 'error');
+    }
+}
+
+// Populate projects dropdown
+function populateProjectsDropdown(projects) {
+    // Clear current options except the placeholder
+    while (projectSelect.options.length > 1) {
+        projectSelect.remove(1);
+    }
+    
+    // Add project options
+    for (const project of projects) {
+        const option = document.createElement('option');
+        option.value = project['No.'];
+        option.textContent = `${project['No.']} - ${project['Project Name']}`;
+        projectSelect.appendChild(option);
+    }
+    
+    // Update placeholder
+    projectSelect.options[0].textContent = projects.length > 0 
+        ? 'Выберите проект' 
+        : 'Нет доступных проектов';
+}
+
+// Handle project selection
+projectSelect.addEventListener('change', (event) => {
+    selectedProjectId.value = event.target.value;
+    console.log('Selected project ID:', selectedProjectId.value);
+});
+
+// Initialize projects
+fetchProjects();
 
 // WebSocket connection
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -169,10 +215,18 @@ function showNotification(message, type = 'success') {
 }
 
 processButton.addEventListener('click', async () => {
+    if (!selectedProjectId.value) {
+        showNotification('Пожалуйста, выберите проект', 'error');
+        return;
+    }
+
     const formData = new FormData();
     files.forEach((fileData, fileName) => {
         formData.append('files', fileData.file);
     });
+    
+    // Add the project ID to the form data
+    formData.append('projectId', selectedProjectId.value);
 
     processButton.disabled = true;
     

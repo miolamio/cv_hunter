@@ -75,6 +75,36 @@ main {
     box-shadow: 0 2px 10px var(--shadow-color);
 }
 
+.projects-section {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.projects-section label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.project-select {
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--container-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.project-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
 .drop-zone {
     border: 2px dashed var(--border-color);
     border-radius: 8px;
